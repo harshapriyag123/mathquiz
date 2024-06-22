@@ -1,0 +1,67 @@
+async function submitAnswer(problemId, answer) {
+    console.log(`Submitting answer for problem ${problemId}: ${answer}`);
+    try {
+        const response = await fetch('/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ problem_id: problemId, answer: answer })
+        });
+        const result = await response.json();
+        console.log(result);  // Debug print
+        if (result.score !== undefined) {
+            console.log(`Received score: ${result.score}`);
+            showAlert(`Your score: ${result.score}`, 'success');
+            setTimeout(() => {
+                window.location.href = '/leaderboard';  // Navigate to the leaderboard page
+            }, 2000); // Delay to show alert before navigation
+        } else {
+            console.log('Error response:', result);
+            showAlert('Error submitting answer', 'error');
+        }
+    } catch (error) {
+        console.log('Fetch error:', error);
+        showAlert('Error submitting answer', 'error');
+    }
+}
+
+function showAlert(message, type) {
+    const alertBox = document.createElement('div');
+    alertBox.className = `alert ${type}`;
+    alertBox.innerText = message;
+    document.body.appendChild(alertBox);
+    setTimeout(() => {
+        alertBox.remove();
+    }, 3000);
+}
+
+function createBubbles() {
+    const symbols = ['+', '-', '×', '÷', '=', '≠', '≈', '∞', '√', 'π', '∫', '∆', '∑', '≤', '≥'];
+    const numBubbles = 30; // Number of bubbles to create
+    const body = document.body;
+
+    for (let i = 0; i < numBubbles; i++) {
+        createBubble();
+    }
+
+    function createBubble() {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+        bubble.style.left = `${Math.random() * 100}vw`;
+        bubble.style.animationDuration = `${5 + Math.random() * 10}s`; // Random duration between 5s and 15s
+        bubble.style.fontSize = `${20 + Math.random() * 40}px`; // Random size between 20px and 60px
+        body.appendChild(bubble);
+
+        // Remove the bubble when the animation ends
+        bubble.addEventListener('animationend', () => {
+            body.removeChild(bubble);
+            createBubble(); // Create a new bubble to maintain the number
+        });
+    }
+}
+
+window.onload = () => {
+    createBubbles();
+}

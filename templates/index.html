@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problems</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Problems</h1>
+    <div id="problems">
+        {% for problem in problems %}
+        <div class="problem">
+            <p>{{ problem.question }}</p>
+            {% for option in problem.options %}
+            <button onclick="submitAnswer({{ problem.id }}, '{{ option }}')">{{ option }}</button>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
