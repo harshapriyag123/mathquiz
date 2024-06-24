@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .leaderboard {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .leaderboard th, .leaderboard td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .leaderboard th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .leaderboard tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Leaderboard</h1>
+        <table class="leaderboard">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Email</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboard-body">
+                <!-- Leaderboard data will be injected here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <script src="{{ url_for('static', filename='leaderboard.js') }}"></script>
+</body>
+</html>
